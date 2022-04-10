@@ -1,3 +1,3 @@
-DROP TABLE IF EXISTS entries;
-DROP TABLE IF EXISTS tranfsers;
-DROP TABLE IF EXISTS accounts;
+DROP TABLE "public"."entries";
+DROP TABLE "public"."transfers";
+DROP TABLE "public"."accounts";
