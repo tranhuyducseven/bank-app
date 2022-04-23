@@ -5,7 +5,7 @@ createdb:
 	docker exec -it postgres12 createdb --username=root --owner=root bank_app
 
 dropdb:
-	docker exec -it postgres12 dropdb simple_bank
+	docker exec -it postgres12 dropdb bank_app
 
 migrateup:
 	migrate -path db/migration -database "postgresql://root:secret@localhost:5432/bank_app?sslmode=disable" -verbose up
@@ -15,5 +15,6 @@ migratedown:
 
 sqlc:
 	sqlc generate
-
-.PHONY: postgres createdb dropdb migrateup migratedown sqlc
+test:
+	go test -v -cover ./...
+.PHONY: postgres createdb dropdb migrateup migratedown sqlc test
