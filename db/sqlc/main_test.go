@@ -5,21 +5,24 @@ import (
 	"log"
 	"os"
 	"testing"
-	_"github.com/lib/pq"
-)
 
-var testQueries *Queries
+	_ "github.com/lib/pq"
+)
 
 const (
 	dbDriver = "postgres"
 	dbSource = "postgresql://root:secret@localhost:5432/bank_app?sslmode=disable"
 )
 
+var testDB *sql.DB
+var testQueries *Queries
+
 func TestMain(m *testing.M) {
-	conn, err := sql.Open(dbDriver, dbSource)
+	var err error
+	testDB, err = sql.Open(dbDriver, dbSource)
 	if err != nil {
 		log.Fatal("Failed to open database", err)
 	}
-	testQueries = New(conn)
+	testQueries = New(testDB)
 	os.Exit(m.Run())
 }
