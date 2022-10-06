@@ -1,5 +1,5 @@
-pullimage:
-	docker pull postgres:12-alpine
+bootstrapdb:
+	docker-compose up -d --remove-orphans
 postgres:
 	docker run --name postgres12 -p 5432:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=secret -d postgres:12-alpine
 
@@ -22,4 +22,4 @@ test:
 psql:
 	docker exec -it postgres12 psql -U root -d bank_app
 
-.PHONY: pullimage postgres createdb dropdb migrateup migratedown sqlc test psql
+.PHONY: boostrapdb postgres createdb dropdb migrateup migratedown sqlc test psql

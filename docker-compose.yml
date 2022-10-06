@@ -1,0 +1,32 @@
+version: "1"
+services:
+  #  ochapter_server:
+  #   container_name: ochapter_server
+  #   build: .
+  #   restart: always
+  #   ports:
+  #     - 3000:3000
+  #   env_file: .env
+
+  postgres:
+    image: postgres:12-alpine 
+    container_name: postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    env_file: .docker.env
+
+  adminer:
+    image: adminer
+    restart: always
+    links:
+      - postgres:postgres
+    ports:
+      - 8080:8080
+
+volumes:
+  pg_data:
+
+
