@@ -19,6 +19,8 @@ test:
 	go test -v -cover ./...
 psql:
 	docker exec -it postgres psql -U root -d bank_app
+server:
+	go run main.go
 
-.PHONY: boostrapdb postgres createdb dropdb migrateup migratedown sqlc test psql
+.PHONY: boostrapdb postgres createdb dropdb migrateup migratedown sqlc test psql server
 
