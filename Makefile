@@ -1,4 +1,4 @@
-bootstrapdb:
+bootstrap:
 	docker-compose up -d --remove-orphans
 dropmaindb:
 	docker exec -it postgres dropdb bank_app 
@@ -22,5 +22,5 @@ psql:
 server:
 	go run main.go
 
-.PHONY: boostrapdb postgres createdb dropdb migrateup migratedown sqlc test psql server
+.PHONY: boostrap postgres createdb dropdb migrateup migratedown sqlc test psql server
 

@@ -1,4 +1,4 @@
-version: "1"
+version: "3"
 services:
   #  ochapter_server:
   #   container_name: ochapter_server
@@ -11,7 +11,6 @@ services:
   postgres:
     image: postgres:12-alpine 
     container_name: postgres
-    restart: always
     ports:
       - "5432:5432"
     volumes:
@@ -20,7 +19,6 @@ services:
 
   adminer:
     image: adminer
-    restart: always
     links:
       - postgres:postgres
     ports:
