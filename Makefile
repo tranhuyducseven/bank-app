@@ -21,6 +21,9 @@ psql:
 	docker exec -it postgres psql -U root -d bank_app
 server:
 	go run main.go
+mock:
+	mockgen -package mockdb -destination db/mock/store.go github.com/tranhuyducseven/Go-bank-app/db/sqlc Store
 
-.PHONY: boostrap postgres createdb dropdb migrateup migratedown sqlc test psql server
+
+.PHONY: boostrap postgres createdb dropdb migrateup migratedown sqlc test psql server mock 
 
