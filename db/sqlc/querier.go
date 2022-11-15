@@ -24,4 +24,7 @@ type Querier interface {
 	UpdateAccount(ctx context.Context, arg UpdateAccountParams) (Account, error)
 }
 
+//And here you can see it declares a blank variable var _ Querier to make sure that the Queries struct 
+//must implement all functions of this Querier interface.
+
 var _ Querier = (*Queries)(nil)
