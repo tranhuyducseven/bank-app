@@ -10,11 +10,7 @@ import (
 	"github.com/tranhuyducseven/Go-bank-app/util"
 )
 
-const (
-	dbDriver      = "postgres"
-	dbSource      = "postgresql://root:seven@localhost:5432/bank_app?sslmode=disable"
-	serverAddress = "0.0.0.0:3000"
-)
+
 
 func main() {
 	config, err := util.LoadConfig(".")
