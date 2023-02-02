@@ -25,6 +25,7 @@ func NewServer(config util.Config, store db.Store) (*Server, error) {
 	}
 
 	server := &Server{
+		config:     config,
 		store:      store,
 		tokenMaker: tokenMaker,
 	}
@@ -32,6 +33,7 @@ func NewServer(config util.Config, store db.Store) (*Server, error) {
 		v.RegisterValidation("currency", validCurrency)
 	}
 	server.setupRouter()
+	
 
 	return server, nil
 }
@@ -46,13 +48,14 @@ func (server *Server) setupRouter() {
 	router.POST("/users", server.createUser)
 	router.POST("/users/login", server.loginUser)
 
-	router.POST("/accounts", server.createAccount)
-	router.GET("/accounts/:id", server.getAccount)
-	router.GET("/accounts", server.listAccount)
-	router.DELETE("/accounts", server.deleteAccount)
-	router.PATCH("/accounts", server.updateAccount)
+	authRoutes := router.Group("/").Use(authMiddleware(server.tokenMaker))
 
-	router.POST("/transfers", server.createTransfer)
+	authRoutes.POST("/accounts", server.createAccount)
+	authRoutes.GET("/accounts/:id", server.getAccount)
+	authRoutes.GET("/accounts", server.listAccount)
+	authRoutes.DELETE("/accounts", server.deleteAccount)
+	authRoutes.PATCH("/accounts", server.updateAccount)
+	authRoutes.POST("/transfers", server.createTransfer)
 
 	server.router = router
 }
