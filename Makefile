@@ -1,5 +1,10 @@
-bootstrap:
+migration_path = db/migration
+db_source = postgresql://root:secret@localhost:5432/bank_app?sslmode=disable
+
+boot:
 	docker-compose up -d --remove-orphans
+down:
+	docker-compose down -v --remove-orphans
 dropmaindb:
 	docker exec -it postgres dropdb bank_app 
 createdb:
@@ -8,14 +13,13 @@ dropdb:
 	docker exec -it postgres dropdb bank_app 
 
 migrateup:
-	migrate -path db/migration -database "postgresql://root:seven@localhost:5432/bank_app?sslmode=disable" -verbose up
+	migrate -path $(migration_path) -database "$(db_source)" -verbose up
 migrateup1:
-	migrate -path db/migration -database "postgresql://root:secret@localhost:5432/bank_app?sslmode=disable" -verbose up 1
-
+	migrate -path $(migration_path) -database "$(db_source)" -verbose up 1
 migratedown:
-	migrate -path db/migration -database "postgresql://root:secret@localhost:5432/bank_app?sslmode=disable" -verbose down
+	migrate -path $(migration_path) -database "$(db_source)" -verbose down
 migratedown1:
-	migrate -path db/migration -database "postgresql://root:secret@localhost:5432/bank_app?sslmode=disable" -verbose down 1
+	migrate -path $(migration_path) -database "$(db_source)" -verbose down 1
 
 sqlc:
 	sqlc generate
@@ -26,7 +30,7 @@ psql:
 server:
 	go run main.go
 mock:
-	mockgen -package mockdb -destination db/mock/store.go github.com/tranhuyducseven/Go-bank-app/db/sqlc Store
+	mockgen -package mockdb -destination db/mock/store.go github.com/tranhuyducseven/bank-app/db/sqlc Store
 
 
 .PHONY: boostrap postgres createdb dropdb migrateup migratedown migrateup1 migratedown1  sqlc test psql server mock 

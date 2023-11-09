@@ -8,7 +8,6 @@ services:
     volumes:
       - pg_data:/var/lib/postgresql/data
     env_file: .docker.env
-
   adminer:
     image: adminer
     links:
